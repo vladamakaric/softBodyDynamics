@@ -28,7 +28,7 @@ void Draw::CircleOutline(double _x, double _y,double _HRadius, int _vertices)
 	glEnd();
 }
 
-void Draw::Line(CVector &_a, CVector &_b)
+void Draw::Line(CVector _a, CVector _b)
 {
 	glBegin(GL_LINES);
 	PushVertex(_a);

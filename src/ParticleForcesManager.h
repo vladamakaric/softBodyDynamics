@@ -10,7 +10,7 @@ class CParticleForcesManager
 {
 public:
 	vector<CParticleForceGenerator*> PFGs;
-	vector<vector<CParticle*>> particles;
+	vector<vector<CParticle*> > particles;
 
 	void AddParticle(CParticle* particle, int PFGIndx);
 	void AddPFG(CParticleForceGenerator* newPFG);

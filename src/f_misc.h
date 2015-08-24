@@ -34,7 +34,7 @@ namespace F
 			if(!_pContainer.size())
 				return;
 
-			for(T::iterator iter = _pContainer.begin(); iter!=_pContainer.end(); iter++)
+			for( typename T::iterator iter = _pContainer.begin(); iter!=_pContainer.end(); iter++)
 				delete (*iter);
 			
 			_pContainer.clear();

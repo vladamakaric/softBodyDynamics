@@ -1,7 +1,8 @@
-#pragma once
+#ifndef VECTOR_H
+#define VECTOR_H
+
 #include <math.h>
 #include <ostream>
-#include "global.h"
 
 using namespace std;
 
@@ -12,18 +13,18 @@ public:
 public:
 	CVector(void){}
 
-	CVector(double lenght)
-	{
-		int xSign = rand()%10>5 ? 1 : -1;
-		int ySign = rand()%10>5 ? 1 : -1;
-
-		x = (rand()%100)*xSign, 
-		y = (rand()%100)*ySign;
-
-		Normalise();
-		x*=lenght;
-		y*=lenght;
-	}
+	// CVector(double lenght)
+	// {
+	// 	int xSign = rand()%10>5 ? 1 : -1;
+	// 	int ySign = rand()%10>5 ? 1 : -1;
+    //
+	// 	x = (rand()%100)*xSign, 
+	// 	y = (rand()%100)*ySign;
+    //
+	// 	Normalise();
+	// 	x*=lenght;
+	// 	y*=lenght;
+	// }
 
 	CVector(double Ix,double Iy): x(Ix), y(Iy){}
 
@@ -120,3 +121,4 @@ public:
 	}
 };
 
+#endif

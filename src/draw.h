@@ -15,7 +15,7 @@ namespace Draw
 	void CircleFill(const CVector &_v, double _HRadius, int _vertices);
 	void CircleOutline(const CVector &_v, double _HRadius, int _vertices);
 	void PushCircle(double _x, double _y,double _HRadius, int _vertices);
-	void Line(CVector &_a, CVector &_b);
+	void Line(CVector _a, CVector _b);
 	void Line( CVector ln[], int size);
 
 

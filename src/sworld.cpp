@@ -49,7 +49,7 @@ void CSWorld::Simulate()
 
 	popusiga = 0;
 
-	srand( unsigned int(time(NULL)) );
+	srand( (unsigned int)time(NULL) );
 	run = true;
 	InitGraphix();
 	float ang = 0;
