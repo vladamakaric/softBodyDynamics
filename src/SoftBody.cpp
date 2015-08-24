@@ -416,7 +416,7 @@ void CSoftBody::Draw()
 		polygon.push_back(visibleParticles[i]->position);
 
 	double area = F::GEOMETRY::PolygonArea(polygon);
-	printf("Polaria: %f, \n", area);
+	// printf("Polaria: %f, \n", area);
 }
 
 void CSoftBody::ConnectReflexAngleParticles()

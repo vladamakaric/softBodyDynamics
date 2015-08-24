@@ -23,12 +23,6 @@
 #include "OrientedParabola.h"
 
 
-//#include <boost/random/mersenne_twister.hpp>
-//#include <boost/random/uniform_int_distribution.hpp>
-
-//boost::random::mt19937 gen;
-//
-
 #define PI (3.141592653589793)
 
 double getFlatBezierLength(double L, double V)
@@ -46,7 +40,30 @@ CSWorld::CSWorld()
 }
 
 void CSWorld::Simulate()
-{
+{	
+	
+	printf("\n**************************************************");
+	printf("\nThis is a soft body dynamics simulation");
+	printf("\nThe user draws the shape and adjust it's elasticity and damping coefficients");
+	printf("\n--------------Vladimir Makaric 2021---------------");
+	printf("\n**************************************************");
+
+	printf("\n***************Instructions************************");
+	printf("\n----------Creating the shape-----------------------");
+	printf("\n1. Draw an utline of the soft body above the purple lines, with consecutive left cliks.");
+	printf("\n2. Press ENTER.");
+	printf("\n----------Adjusting the shape-----------------------");
+	printf("\nMiddle mouse (wheel) click: Reposition the shape");
+	printf("\nRight mouse button: toggle between elasticity changing or damping changing");
+	printf("\nMouse wheel up/down: increase/decrease elasticity or damping depending on which is active (see above^)");
+	printf("\n----------Adjusting the purple boundary-------------");
+	printf("\nLeft/Right arrow: rotate boundary");
+	printf("\n**************************************************\n");
+
+	printf("\nPress ENTER to launch simulation!");
+	getchar();
+
+
 	srand( (unsigned int)time(NULL) );
 	run = true;
 	InitGraphix();
@@ -56,11 +73,6 @@ void CSWorld::Simulate()
 	
 	CSBG = new ComplexSoftBodyGenerator();
 
-	//particles.push_back(new CParticle(12, CVector(500,500)));
-	//particles.push_back(new CParticle(12, CVector(400,400)));
-	//particles.push_back(new CParticle(12, CVector(400,500)));
-	//particles.push_back(new CParticle(12, CVector(500,400)));
-	//particles.push_back(new CParticle(12, CVector(450,450)));
 
 	boundingBoxVecs.push_back(CVector(0,400));
 	boundingBoxVecs.push_back(CVector(260,40));
@@ -78,55 +90,8 @@ void CSWorld::Simulate()
 	CVector djole(0.1182, -0.0068);
 	CLine cdjo(-450.0, -300.0, 150000.0);
 
-//	F::VECTOR::ReflectVectorRayFromLine(djole, cdjo);
-
-	printf("Obrnu  vektor: (%lf, %lf)\n", djole.x,djole.y);
-
-	//particles.push_back(new CParticle(12, CVector(200,100)));
-	//particles.push_back(new CParticle(12, CVector(400,100)));
-	//particles.push_back(new CParticle(12, CVector(200,240)));
-
-	
-	//AddForceGenerator(new CAngularSpringFG(particles[2], particles[1], particles[0], 50, 25));
-	//AddForceGenerator(new CAngularSpringFG(particles[1], particles[0], particles[2], 50, 25));
-	//AddForceGenerator(new SpringForceGenerator(particles[1], particles[0], 200, 200, F::DISTANCE::GetDistance(particles[1]->position, particles[0]->position)));
-	//AddForceGenerator(new SpringForceGenerator(particles[1], particles[2], 200, 200, F::DISTANCE::GetDistance(particles[1]->position, particles[2]->position)));
-	
-
-	//AddForceGenerator(new SpringForceGenerator(particles[0], particles[2], 10, 10, F::DISTANCE::GetDistance(particles[0]->position, particles[2]->position)));
-	//AddForceGenerator(new CAngularSpringFG(particles[1], particles[2], particles[0], 100, 10));
-	//AddForceGenerator(new CAngularSpringFG(particles[1], particles[2], particles[0], 100, 10));
-	//particles.push_back(new CParticle(12, CVector(500,500)));
-	//particles.push_back(new CParticle(12, CVector(400,400)));
-	//particles.push_back(new CParticle(12, CVector(400,500)));
-	//particles.push_back(new CParticle(12, CVector(500,400)));
-	//particles.push_back(new CParticle(12, CVector(450,450)));
 
 
-
-	/*
-	forceGenerators.push_back(new SpringForceGenerator(particles[2], particles[1], 50, 100));
-	forceGenerators.push_back(new SpringForceGenerator(particles[1], particles[3], 50, 100));
-
-	forceGenerators.push_back(new SpringForceGenerator(particles[2], particles[0], 50, 100));
-	forceGenerators.push_back(new SpringForceGenerator(particles[3], particles[0], 50, 100));
-
-	forceGenerators.push_back(new SpringForceGenerator(particles[0], particles[4], 50, 100*1.41/2));
-	forceGenerators.push_back(new SpringForceGenerator(particles[1], particles[4], 50, 100*1.41/2));
-
-	forceGenerators.push_back(new SpringForceGenerator(particles[2], particles[4], 50, 100*1.41/2));
-	forceGenerators.push_back(new SpringForceGenerator(particles[3], particles[4], 50, 100*1.41/2));
-	*/
-
-	//GenerateCircularBlobConnectedToCenter(CVector(400,300), 120, 4, 10, 10, 70, 70);
-
-	/*
-	for(int i=0; i<n-1; i++)
-		for(int j=i+1; j<n; j++)
-		{
-			forceGenerators.push_back(new SpringForceGenerator(particles[i],particles[j], 5,(float)sqrt((particles[i]->position.x-particles[j]->position.x)*(particles[i]->position.x-particles[j]->position.x)+(particles[i]->position.y-particles[j]->position.y)*(particles[i]->position.y-particles[j]->position.y))));
-		}
-*/
 	CVector leftB(200,0);
 	CVector rightB(600,0);
 	CVector middleB(400,1);
@@ -145,8 +110,6 @@ void CSWorld::Simulate()
 				run = false;
 
 			mpos.Set(event.button.x, SCREEN_HEIGHT - event.button.y);
-			//printf("%d \n" ,event.button.x);
-			//printf("%d \n" , SCREEN_HEIGHT - event.button.y);	
 
 
 			CSBG->HandleEvents();
@@ -159,7 +122,6 @@ void CSWorld::Simulate()
 			{
 				if( event.button.button == SDL_BUTTON_MIDDLE )
 				{
-					//for()
 
 					CVector sum(0,0);
 					for(int i=0; i<particles.size(); i++)
@@ -257,7 +219,7 @@ void CSWorld::Simulate()
 					}
 
 					char title[128];
-					sprintf (title, "Elasticity keof: %lf, Damping koef: %lf", eK, dK);
+					sprintf (title, "Elasticity coeff: %lf, Damping coeff: %lf", eK, dK);
 					SDL_WM_SetCaption( title , NULL );
 				}
 			}
