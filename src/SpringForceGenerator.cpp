@@ -19,7 +19,7 @@ void SpringForceGenerator::Update( double timelapse )
 	if(springLenghtDiff>0)
 	{
 		//dampingKoef = 300;
-	//	elasticityKoef = 400;
+		//elasticityKoef = 400;
 	}
 
 	CVector force = elasticityKoef*springLenghtDiff*springVecToOther;
@@ -32,8 +32,7 @@ void SpringForceGenerator::Update( double timelapse )
 
 	CVector p1VelocityComponentToSpring = F::VECTOR::GetVectorComponentToLine(springBearing, p1->velocity);
 	CVector p2VelocityComponentToSpring = F::VECTOR::GetVectorComponentToLine(springBearing, p2->velocity);
-
-	CVector dampingForce = -p1VelocityComponentToSpring + p2VelocityComponentToSpring;
+	CVector dampingForce = F::VECTOR::GetVectorFromAToB(p1VelocityComponentToSpring,p2VelocityComponentToSpring);
 	dampingForce*= dampingKoef;
 
 	//////////////////////////////////////////

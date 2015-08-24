@@ -27,6 +27,7 @@
 //#include <boost/random/uniform_int_distribution.hpp>
 
 //boost::random::mt19937 gen;
+//
 
 #define PI (3.141592653589793)
 
@@ -46,9 +47,6 @@ CSWorld::CSWorld()
 
 void CSWorld::Simulate()
 {
-
-	popusiga = 0;
-
 	srand( (unsigned int)time(NULL) );
 	run = true;
 	InitGraphix();
@@ -204,6 +202,7 @@ void CSWorld::Simulate()
 
 				if( event.button.button == SDL_BUTTON_WHEELUP || event.button.button == SDL_BUTTON_WHEELDOWN )
 				{
+
 					double diff;
 
 					if(changeElasticity)
@@ -213,6 +212,8 @@ void CSWorld::Simulate()
 
 						if( event.button.button == SDL_BUTTON_WHEELDOWN)
 							diff = -eCoefStep;
+
+
 
 						for(int i=0; i<forceGenerators.size(); i++)
 						{
@@ -240,6 +241,24 @@ void CSWorld::Simulate()
 							double t = dynamic_cast<SpringForceGenerator*>(forceGenerators[i])->dampingKoef;
 						}
 					}
+
+					double eK = 0;
+					double dK = 0;
+
+					for(int i=0; i<forceGenerators.size(); i++)
+					{
+						eK = dynamic_cast<SpringForceGenerator*>(forceGenerators[i])->elasticityKoef;
+						dK = dynamic_cast<SpringForceGenerator*>(forceGenerators[i])->dampingKoef;
+					}
+
+					if(forceGenerators.size()){
+						eK = eK/forceGenerators.size();
+						dK = dK/forceGenerators.size();
+					}
+
+					char title[128];
+					sprintf (title, "Elasticity keof: %lf, Damping koef: %lf", eK, dK);
+					SDL_WM_SetCaption( title , NULL );
 				}
 			}
 		}
@@ -324,7 +343,7 @@ void CSWorld::InitGraphix()
 	//glEnable(GL_POLYGON_SMOOTH);
 	//glHint(GL_POLYGON_SMOOTH_HINT,GL_NICEST);
 
-	SDL_WM_SetCaption( "zorpro", NULL );
+	SDL_WM_SetCaption( "Soft body dynamics", NULL );
 }
 
 void CSWorld::UpdateParticles( double timeLapse )
@@ -373,9 +392,6 @@ void CSWorld::Logic()
 
 void CSWorld::Draw()
 {
-	if(popusiga)
-	glColor3d(1,1,0);
-	else
 		glColor3d(0,1,0);
 
 	for(int i=0; i<forceGenerators.size(); i++) ((SpringForceGenerator*)forceGenerators[i])->Draw();
